@@ -1,11 +1,12 @@
+import nltk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.utils import upload, generate
 from databases import Database
 from app.config import DATABASE_URL
+nltk.download('words')
 
 app = FastAPI()
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
