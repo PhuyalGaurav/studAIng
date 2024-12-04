@@ -44,6 +44,9 @@ export async function POST(
     return NextResponse.json({ message: 'Message sent' }, { status: 200 })
   } catch (error) {
     console.error("Error creating message:", error);
-    return NextResponse.json({ message: error.message }, { status: 500 })
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ message: 'An unknown error occurred' }, { status: 500 });
   }
 }
