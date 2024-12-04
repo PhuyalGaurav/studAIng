@@ -1,2 +1,3 @@
-# studAIng
-dk
+# StudAIng
+
+(IN PROGRESS)
