@@ -13,16 +13,19 @@ export async function POST(
   try {
     // Check if chatSessionId is 'undefined' and handle it
     if (params.chatSessionId === 'undefined') {
+      console.error("chatSessionId is 'undefined'");
       return NextResponse.json({ message: 'Invalid chatSessionId' }, { status: 400 });
     }
 
-    // Remove '/undefined' from chatSessionId if it exists
+    // Remove 'undefined' from chatSessionId if it exists
     if (params.chatSessionId.includes('undefined')) {
       params.chatSessionId = params.chatSessionId.replace('undefined', '');
+      console.log("Updated chatSessionId:", params.chatSessionId);
     }
 
     // Validate the chatSessionId
     if (!params.chatSessionId || params.chatSessionId.length !== 24) {
+      console.error("Invalid chatSessionId provided:", params.chatSessionId);
       return NextResponse.json({ message: 'Invalid chatSessionId' }, { status: 400 });
     }
 
@@ -40,6 +43,7 @@ export async function POST(
 
     return NextResponse.json({ message: 'Message sent' }, { status: 200 })
   } catch (error) {
+    console.error("Error creating message:", error);
     return NextResponse.json({ message: error.message }, { status: 500 })
   }
 }
