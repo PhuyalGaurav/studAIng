@@ -4,8 +4,6 @@ import Navbar from "@/components/layout/Navbar"
 import { FlipWords } from "@/components/ui/flip-words"
 import { useRef } from "react"
 import { Highlighted } from "@/components/ui/hero-highlight"
-import { Check } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 export default function Home() {
   const words = ["Enhanced Learning", "Better Learning", "Engaged Learning", "Easier Learning"]

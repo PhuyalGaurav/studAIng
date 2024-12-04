@@ -9,7 +9,7 @@ export default async function generateAIResponse(messageInput: ChatCompletionMes
   const selectedModel = selectAIModel(messageInput);
 
   try {
-    if (selectedModel === "gpt-4o") {
+    if (selectedModel === "gpt-4o-mini") {
       return await getGPT4oResponse(messageInput as ChatCompletionMessageParam[]);
     } else {
       return await getO1Response(messageInput as O1MessagesInput[]);

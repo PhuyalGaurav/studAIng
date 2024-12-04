@@ -14,7 +14,7 @@ const openai = new OpenAI({
 
 export default async function generateChatName(input: string): Promise<string> {
   const response = await openai.chat.completions.create({
-    model: "gpt-4o",
+    model: "gpt-4o-mini",
     messages: [
       {
         role: "system",
