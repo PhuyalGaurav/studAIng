@@ -59,7 +59,7 @@ export default function Home() {
         </div>
       </section>
       <section className="w-full flex flex-col px-6 md:px-8 lg:px-12 xl:px-20 py-20 bg-dot-black/[0.1] space-y-16">
-        <h1 className="text-center text-4xl sm:text-5xl md:text-6xl font-bold"> Product </h1>
+        <h1 className="text-center text-4xl sm:text-5xl md:text-6xl font-bold">Features</h1>
         <div className="flex flex-col-reverse lg:flex-row w-full">
           <div className="w-3/4 lg:w-1/2 mt-8 lg:mt-0 mx-auto">
             <div className="relative group/card w-full rounded-2xl aspect-[16/9] border-2 border-gray-400 shadow-xl">
@@ -124,61 +124,6 @@ export default function Home() {
             <p className="text-base sm:text-xl lg:text-xl xl:text-2xl mt-4 text-center lg:text-left lg:ml-16">
               Experience real-time physics simulations to understand complex concepts through interactive and visual experimentation.
             </p>
-          </div>
-        </div>
-      </section>
-      <section className="w-full flex flex-col px-6 md:px-8 lg:px-12 xl:px-20 py-20 bg-gray-100 space-y-16">
-        <h1 className="text-center text-4xl sm:text-5xl md:text-6xl font-bold"> Pricing </h1>
-        <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 md:gap-8">
-          <div className="flex flex-col p-6 bg-white shadow-lg rounded-lg justify-between border border-gray-200">
-            <div>
-              <h3 className="text-2xl font-bold text-center">Free</h3>
-              <div className="mt-4 text-center ">
-                <span className="text-4xl font-bold">$0</span>/ month
-              </div>
-              <ul className="mt-4 space-y-2">
-                <li className="flex items-center">
-                  <Check className="text-green-500 mr-2 h-5 w-5" />
-                  50 messages per day
-                </li>
-                <li className="flex items-center">
-                  <Check className="text-green-500 mr-2 h-5 w-5" />
-                  Limited saved chats
-                </li>
-              </ul>
-            </div>
-            <div className="mt-6">
-              <Button className="w-full">Get Started</Button>
-            </div>
-          </div>
-          <div className="flex flex-col p-6 bg-white shadow-lg rounded-lg justify-between border border-gray-200">
-            <div>
-              <h3 className="text-2xl font-bold text-center">Pro</h3>
-              <div className="mt-4 text-center">
-                <span className="text-4xl font-bold">$19</span>/ month
-              </div>
-              <ul className="mt-4 space-y-2">
-                <li className="flex items-center">
-                  <Check className="text-green-500 mr-2 h-5 w-5" />
-                  Unlimited messages
-                </li>
-                <li className="flex items-center">
-                  <Check className="text-green-500 mr-2 h-5 w-5" />
-                  Unlimited saved chats
-                </li>
-                <li className="flex items-center">
-                  <Check className="text-green-500 mr-2 h-5 w-5" />
-                  Access to advanced features
-                </li>
-                <li className="flex items-center">
-                  <Check className="text-green-500 mr-2 h-5 w-5" />
-                  Priority support
-                </li>
-              </ul>
-            </div>
-            <div className="mt-6">
-              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">Subscribe</Button>
-            </div>
           </div>
         </div>
       </section>
