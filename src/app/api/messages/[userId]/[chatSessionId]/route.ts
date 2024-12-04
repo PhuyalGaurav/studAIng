@@ -7,7 +7,25 @@ export async function POST(
   request: Request,
   { params }: { params: { userId: string, chatSessionId: string } }
 ) {
+  // Log the incoming parameters
+  console.log("Received params:", params);
+
   try {
+    // Check if chatSessionId is 'undefined' and handle it
+    if (params.chatSessionId === 'undefined') {
+      return NextResponse.json({ message: 'Invalid chatSessionId' }, { status: 400 });
+    }
+
+    // Remove '/undefined' from chatSessionId if it exists
+    if (params.chatSessionId.includes('undefined')) {
+      params.chatSessionId = params.chatSessionId.replace('undefined', '');
+    }
+
+    // Validate the chatSessionId
+    if (!params.chatSessionId || params.chatSessionId.length !== 24) {
+      return NextResponse.json({ message: 'Invalid chatSessionId' }, { status: 400 });
+    }
+
     const body = await request.json();
     const message: Message & { componentMessageType: string } = body.message;
 
@@ -22,6 +40,6 @@ export async function POST(
 
     return NextResponse.json({ message: 'Message sent' }, { status: 200 })
   } catch (error) {
-    return NextResponse.json({ message: error }, { status: 500 })
+    return NextResponse.json({ message: error.message }, { status: 500 })
   }
 }

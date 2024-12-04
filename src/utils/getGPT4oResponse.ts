@@ -14,7 +14,7 @@ const openai = new OpenAI({
 
 export default async function getGPT4oResponse(messages : ChatCompletionMessageParam[]) : Promise<AIResponse> {  
   const response = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-4o",
     messages: messages,
     temperature: 1,
     max_tokens: 15010,
