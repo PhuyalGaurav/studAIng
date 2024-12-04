@@ -1,11 +1,22 @@
 import { authOptions } from "@/lib/authOptions";
 import ChatLayout from "@/components/chat/ChatLayout";
-import prisma from "@/lib/db"
+import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import DateTime from "@/components/DateTime";
 
 export default async function ChatPage({ params }: { params: { chatId: string } }) {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
+
+  // Debugging statement to log the params object
+  console.log("Received params:", params);
+
+  // Validate the chatId
+  if (!params.chatId || params.chatId.length !== 24) {
+    console.error("Invalid chatId provided:", params.chatId);
+    return redirect("/");
+  }
+
   const chatOwner = await prisma.chat.findUnique({
     where: {
       chatSessionId: params.chatId
@@ -13,7 +24,7 @@ export default async function ChatPage({ params }: { params: { chatId: string } 
     select: {
       userId: true
     }
-  })
+  });
 
   if (!session) {
     return redirect("/auth/signin");
@@ -30,7 +41,7 @@ export default async function ChatPage({ params }: { params: { chatId: string } 
     orderBy: {
       createdAt: 'desc'
     }
-  })
+  });
 
   const chats = await prisma.chat.findUnique({
     where: {
@@ -45,7 +56,7 @@ export default async function ChatPage({ params }: { params: { chatId: string } 
         }
       }
     }
-  })
+  });
 
   const filteredMessages = chats?.messages.map((message) => {
     const { messageType, ...rest } = message;
@@ -58,6 +69,7 @@ export default async function ChatPage({ params }: { params: { chatId: string } 
   return (
     <div className="flex flex-col h-screen bg-grid-black/[0.1]">
       <ChatLayout chatHistory={chatsHistory} userId={session.user.id} messages={filteredMessages} chatId={params.chatId} />
+      <DateTime />
     </div>
-  )
+  );
 }

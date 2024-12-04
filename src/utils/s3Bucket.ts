@@ -13,7 +13,7 @@ const credentials = {
 };
 
 const s3Config: S3ClientConfig = {
-  region: "ap-southeast-1",
+  region: "us-east-1",
   credentials: credentials
 };
 
