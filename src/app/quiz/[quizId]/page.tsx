@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-
 const Quiz = dynamic(
   () => import("@/components/chat/interactive-components/quiz"),
   { ssr: false }
@@ -87,7 +86,7 @@ const QuizPage = () => {
           property="og:description"
           content="Test your knowledge with our interactive quiz"
         />
-        <meta property="og:image" content="/quiz-preview.png" />
+        <meta property="og:image" content="/logo.png" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -96,7 +95,11 @@ const QuizPage = () => {
           name="twitter:description"
           content="Test your knowledge with our interactive quiz"
         />
-        <meta name="twitter:image" content="/quiz-preview.png" />
+        <meta name="twitter:image" content="/logo.png" />
+
+        {/* Discord */}
+        <meta name="theme-color" content="#5865F2" />
+        <meta property="discord:invite_image" content="/logo.png" />
       </Head>
       <div className="w-full h-screen flex flex-col justify-center items-center p-10">
         {isTransitioning && (
@@ -104,6 +107,11 @@ const QuizPage = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         )}
+        <h1 className="text-2xl bold">Welcome to the Quiz!</h1>
+        <p>
+          This quiz was shared with you. Answer the questions below and see how
+          you do!
+        </p>
         <Quiz questions={questions} />
         <button
           onClick={handleNavigation}
