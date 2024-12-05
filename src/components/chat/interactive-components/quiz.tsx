@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface Choice {
   text: string;
@@ -22,6 +22,14 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [quizUrl, setQuizUrl] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showShareButton, setShowShareButton] = useState(true);
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path.includes('/quiz/')) {
+      setShowShareButton(false);
+    }
+  }, []);
 
   const handleAnswerClick = (isCorrect: boolean) => {
     setError(null);
@@ -41,6 +49,7 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
     setCurrentQuestion(0);
     setScore(0);
     setShowScore(false);
+    setQuizUrl(null); // Reset the quiz URL when restarting the quiz
   };
 
   const handleShare = async () => {
@@ -66,9 +75,8 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
       }
 
       const data = await response.json();
-      // Store the full URL without navigation
-      const fullUrl = `${window.location.origin}/quiz/${data.quizId}`;
-      setQuizUrl(fullUrl);
+      const newQuizUrl = `${window.location.origin}/quiz/${data.quizId}`;
+      setQuizUrl(newQuizUrl);
       setShowModal(true);
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to share quiz');
@@ -97,17 +105,19 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
           {error}
         </div>
       )}
-      <div className="w-full flex justify-end">
-        <button
-          onClick={handleShare}
-          disabled={isLoading}
-          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out ${
-            isLoading ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-        >
-          {isLoading ? 'Sharing...' : 'Share'}
-        </button>
-      </div>
+      {showShareButton && (
+        <div className="w-full flex justify-end">
+          <button
+            onClick={handleShare}
+            disabled={isLoading}
+            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out ${
+              isLoading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            {isLoading ? 'Sharing...' : 'Share'}
+          </button>
+        </div>
+      )}
       {showScore ? (
         <div className="text-center">
           <p className="text-2xl font-bold mb-4">
