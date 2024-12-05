@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface Choice {
   text: string;
@@ -22,7 +21,7 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [quizUrl, setQuizUrl] = useState<string | null>(null);
-  const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
 
   const handleAnswerClick = (isCorrect: boolean) => {
     setError(null);
@@ -42,12 +41,11 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
     setCurrentQuestion(0);
     setScore(0);
     setShowScore(false);
-    setQuizUrl(null); // Reset the quiz URL when restarting the quiz
   };
 
   const handleShare = async () => {
     if (quizUrl) {
-      router.push(quizUrl);
+      setShowModal(true);
       return;
     }
 
@@ -68,13 +66,27 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
       }
 
       const data = await response.json();
-      const newQuizUrl = `/quiz/${data.quizId}`;
-      setQuizUrl(newQuizUrl);
-      router.push(newQuizUrl);
+      // Store the full URL without navigation
+      const fullUrl = `${window.location.origin}/quiz/${data.quizId}`;
+      setQuizUrl(fullUrl);
+      setShowModal(true);
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to share quiz');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleCopyLink = () => {
+    if (quizUrl) {
+      navigator.clipboard.writeText(quizUrl).then(() => {
+        // Use a more subtle notification instead of alert
+        const notification = document.createElement('div');
+        notification.textContent = 'Link copied!';
+        notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded';
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 2000);
+      });
     }
   };
 
@@ -126,6 +138,35 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
             </div>
           </div>
         </>
+      )}
+
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg font-semibold mb-4">Share Quiz</h2>
+            <p className="mb-4">Share this link to invite others to take the quiz:</p>
+            <div className="flex items-center mb-4">
+              <input
+                type="text"
+                value={quizUrl || ''}
+                readOnly
+                className="flex-grow p-2 border border-gray-300 rounded-md"
+              />
+              <button
+                onClick={handleCopyLink}
+                className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+              >
+                Copy Link
+              </button>
+            </div>
+            <button
+              onClick={() => setShowModal(false)}
+              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
