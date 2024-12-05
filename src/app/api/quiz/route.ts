@@ -1,22 +1,41 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { v4 as uuidv4 } from 'uuid';
+import { NextResponse } from 'next/server';
+import prisma from '@/lib/db';
 
-let quizzes: { [key: string]: any } = {};
+export async function POST(req: Request) {
+  try {
+    const { questions } = await req.json();
+    
+    if (!questions || !Array.isArray(questions) || questions.length === 0) {
+      return NextResponse.json(
+        { error: 'Invalid quiz format' },
+        { status: 400 }
+      );
+    }
 
-export async function POST(req: NextRequest) {
-  const { questions } = await req.json();
-  const quizId = uuidv4();
-  quizzes[quizId] = questions;
-  return NextResponse.json({ quizId });
+    const quiz = await prisma.quiz.create({
+      data: {
+        questions: questions,
+      },
+    });
+    return NextResponse.json({ quizId: quiz.id });
+  } catch (error) {
+    console.error('Quiz creation error:', error);
+    return NextResponse.json(
+      { error: 'Failed to create quiz. Please try again later.' },
+      { status: 500 }
+    );
+  }
 }
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const quizId = searchParams.get('quizId');
-  const quiz = quizzes[quizId as string];
-  if (quiz) {
-    return NextResponse.json({ questions: quiz });
-  } else {
-    return NextResponse.json({ error: 'Quiz not found' }, { status: 404 });
+export async function GET(req: Request) {
+  try {
+    const quizzes = await prisma.quiz.findMany();
+    return NextResponse.json({ quizzes });
+  } catch (error) {
+    console.error('Quiz fetch error:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch quizzes' },
+      { status: 500 }
+    );
   }
 }

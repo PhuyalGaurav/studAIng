@@ -19,9 +19,12 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleAnswerClick = (isCorrect: boolean) => {
+    setError(null);
     if (isCorrect) {
       setScore(score + 1);
     }
@@ -41,26 +44,47 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
   };
 
   const handleShare = async () => {
-    const response = await fetch('/api/quiz', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ questions }),
-    });
-    const data = await response.json();
-    const quizId = data.quizId;
-    router.push(`/quiz/${quizId}`);
+    setError(null);
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/quiz', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ questions }),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to share quiz');
+      }
+      
+      const data = await response.json();
+      router.push(`/quiz/${data.quizId}`);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Failed to share quiz');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="flex flex-col flex-grow items-center rounded-lg bg-white w-[250px] sm:w-[450px] md:w-[550px] justify-center p-4">
+      {error && (
+        <div className="w-full p-4 mb-4 text-red-700 bg-red-100 rounded-lg">
+          {error}
+        </div>
+      )}
       <div className="w-full flex justify-end">
         <button
           onClick={handleShare}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+          disabled={isLoading}
+          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out ${
+            isLoading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
         >
-          Share
+          {isLoading ? 'Sharing...' : 'Share'}
         </button>
       </div>
       {showScore ? (

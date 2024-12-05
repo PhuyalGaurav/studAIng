@@ -114,3 +114,12 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
+
+model Quiz {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  questions Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("quizzes")
+}
