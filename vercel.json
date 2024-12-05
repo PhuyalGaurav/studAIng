@@ -1,6 +1,9 @@
 {
   "functions": {
-    "api/auth/callback/google": {
+    "api/auth/[...nextauth]": {
+      "maxDuration": 30
+    },
+    "api/auth/[...nextauth].rsc": {
       "maxDuration": 30
     }
   }
