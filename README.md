@@ -8,31 +8,19 @@
 
 Engage with presentations, flashcards, quizzes, and other interactive components designed to make your learning time more efficient.
 
-<video width="600" controls>
-  <source src="/public/videos/basic-features.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+![Basic Features](public/gifs/basic-features.gif)
 
 ### Advanced AI canvas
 Create, draw, and illustrate complex problems for StudAIng to solve and explain.
-<video width="600" controls>
-  <source src="/public/videos/draw-feature.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+![Draw Feature](public/gifs/draw-feature.gif)
 
 ### Physics Simulator
 Experience real-time physics simulations to understand complex concepts through interactive and visual experimentation.
-<video width="600" controls>
-  <source src="/public/videos/physics-feature.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+![Physics Feature](public/gifs/physics-feature.gif)
 
 ### Spelling Trainer
-Learn spelling and pronunciation of words using spelling quizes and pronunciation guides.
-<video width="600" controls>
-  <source src="/public/videos/spelling-feature.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+Learn spelling and pronunciation of words using spelling quizzes and pronunciation guides.
+![Spelling Feature](public/gifs/spelling-feature.gif)
 
 
 ## Technologies used
