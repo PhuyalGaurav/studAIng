@@ -1,10 +1,8 @@
 "use client";
 
-import logo from "@/public/logo.png";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import Head from "next/head";
 const Quiz = dynamic(
   () => import("@/components/chat/interactive-components/quiz"),
   { ssr: false }
