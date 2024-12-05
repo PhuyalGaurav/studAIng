@@ -32,6 +32,7 @@ export async function GET(req: Request) {
     const quizzes = await prisma.quiz.findMany();
     return NextResponse.json({ quizzes });
   } catch (error) {
+    console.log(req);
     console.error('Quiz fetch error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch quizzes' },
