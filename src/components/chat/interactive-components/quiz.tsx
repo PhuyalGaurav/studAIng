@@ -21,6 +21,7 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
   const [showScore, setShowScore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [quizUrl, setQuizUrl] = useState<string | null>(null);
   const router = useRouter();
 
   const handleAnswerClick = (isCorrect: boolean) => {
@@ -41,9 +42,15 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
     setCurrentQuestion(0);
     setScore(0);
     setShowScore(false);
+    setQuizUrl(null); // Reset the quiz URL when restarting the quiz
   };
 
   const handleShare = async () => {
+    if (quizUrl) {
+      router.push(quizUrl);
+      return;
+    }
+
     setError(null);
     setIsLoading(true);
     try {
@@ -54,14 +61,16 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
         },
         body: JSON.stringify({ questions }),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to share quiz');
       }
-      
+
       const data = await response.json();
-      router.push(`/quiz/${data.quizId}`);
+      const newQuizUrl = `/quiz/${data.quizId}`;
+      setQuizUrl(newQuizUrl);
+      router.push(newQuizUrl);
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to share quiz');
     } finally {
