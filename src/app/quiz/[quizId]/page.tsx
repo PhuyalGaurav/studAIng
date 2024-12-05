@@ -1,5 +1,6 @@
 "use client";
 
+import logo from "@/public/logo.png";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -86,7 +87,7 @@ const QuizPage = () => {
           property="og:description"
           content="Test your knowledge with our interactive quiz"
         />
-        <meta property="og:image" content="/logo.png" />
+        <meta property="og:image" content={logo.src} />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -95,11 +96,11 @@ const QuizPage = () => {
           name="twitter:description"
           content="Test your knowledge with our interactive quiz"
         />
-        <meta name="twitter:image" content="/logo.png" />
+        <meta name="twitter:image" content={logo.src} />
 
         {/* Discord */}
         <meta name="theme-color" content="#5865F2" />
-        <meta property="discord:invite_image" content="/logo.png" />
+        <meta property="discord:invite_image" content={logo.src} />
       </Head>
       <div className="w-full h-screen flex flex-col justify-center items-center p-10">
         {isTransitioning && (
