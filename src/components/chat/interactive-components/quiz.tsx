@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Choice {
   text: string;
@@ -18,6 +19,7 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
+  const router = useRouter();
 
   const handleAnswerClick = (isCorrect: boolean) => {
     if (isCorrect) {
@@ -38,8 +40,29 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
     setShowScore(false);
   };
 
+  const handleShare = async () => {
+    const response = await fetch('/api/quiz', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ questions }),
+    });
+    const data = await response.json();
+    const quizId = data.quizId;
+    router.push(`/quiz/${quizId}`);
+  };
+
   return (
     <div className="flex flex-col flex-grow items-center rounded-lg bg-white w-[250px] sm:w-[450px] md:w-[550px] justify-center p-4">
+      <div className="w-full flex justify-end">
+        <button
+          onClick={handleShare}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+        >
+          Share
+        </button>
+      </div>
       {showScore ? (
         <div className="text-center">
           <p className="text-2xl font-bold mb-4">
