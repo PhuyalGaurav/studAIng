@@ -1,4 +1,3 @@
-<div align="center">
 # StudAIng
 
 **StudAIng** is a web application that helps students to study more effectively using AI. It can create Flashcards, Quizzes, Visualization, Presentation for Interactive Learning using AI.
@@ -78,7 +77,6 @@ AWS_SECRET_ACCESS_KEY=your-aws-secret-access-key
 - [Gaurav Phuyal](https://github.com/phuyalgaurav)
 - [Manish Bagale](https://github.com/munannoo)
 
-</div>
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
