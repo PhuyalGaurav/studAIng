@@ -72,36 +72,6 @@ const QuizPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Interactive Quiz | Your App Name</title>
-        <meta
-          name="description"
-          content="Test your knowledge with our interactive quiz"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Interactive Quiz" />
-        <meta
-          property="og:description"
-          content="Test your knowledge with our interactive quiz"
-        />
-        <meta property="og:image" content={logo.src} />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Interactive Quiz" />
-        <meta
-          name="twitter:description"
-          content="Test your knowledge with our interactive quiz"
-        />
-        <meta name="twitter:image" content={logo.src} />
-
-        {/* Discord */}
-        <meta name="theme-color" content="#5865F2" />
-        <meta property="discord:invite_image" content={logo.src} />
-      </Head>
       <div className="w-full h-screen flex flex-col justify-center items-center p-10">
         {isTransitioning && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">

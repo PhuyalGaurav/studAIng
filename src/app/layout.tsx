@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { getServerSession } from "next-auth";
-import SessionProvider from "@/components/SessionProvider"
+import SessionProvider from "@/components/SessionProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,6 +18,16 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "StudAIng",
   description: "Flashcards, Quizzes, Vizualization for Enhanced Learning",
+  icons: {
+    icon: "/logo.png",
+  },
+  openGraph: {
+    images: "/logo.png",
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: "/logo.png",
+  },
 };
 
 export default async function RootLayout({
@@ -25,16 +35,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession()
+  const session = await getServerSession();
 
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
-        <SessionProvider session={session}>
-          {children}
-        </SessionProvider>
+        <SessionProvider session={session}>{children}</SessionProvider>
       </body>
     </html>
   );
