@@ -1,14 +1,4 @@
 {
-  "builds": [
-    {
-      "src": "src/app/api/auth/[...nextauth]/route.ts",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "src/app/**/*.tsx",
-      "use": "@vercel/next"
-    }
-  ],
   "functions": {
     "api/auth/callback/google": {
       "maxDuration": 30
