@@ -19,7 +19,7 @@ export default async function ChatPage({ params }: { params: { chatId: string } 
   // Validate the chatId
   if (!params.chatId || params.chatId.length !== 24) {
     console.error("Invalid chatId provided:", params.chatId);
-    return redirect("/");
+    return redirect("/chat");
   }
 
   try {
@@ -37,7 +37,7 @@ export default async function ChatPage({ params }: { params: { chatId: string } 
     }
 
     if (!chatOwner || chatOwner.userId !== session.user.id) {
-      return redirect("/");
+      return redirect("/chat");
     }
 
     const chatsHistory = await prisma.chat.findMany({
@@ -80,6 +80,6 @@ export default async function ChatPage({ params }: { params: { chatId: string } 
     );
   } catch (error) {
     console.error("Error fetching chat data:", error);
-    return redirect("/");
+    return redirect("/chat");
   }
 }

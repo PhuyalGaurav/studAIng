@@ -14,7 +14,7 @@ const DateTime = () => {
     return null; // or a loading spinner
   }
 
-  return <span>{dateTime}</span>;
+  return <span></span>;
 };
 
 export default DateTime;
